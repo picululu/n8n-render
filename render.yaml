@@ -1,48 +1,39 @@
 services:
   - type: web
-    name: n8n
+    name: n8n-jonas
     env: docker
-    region: frankfurt
-    plan: standard
-    branch: main
+    region: frankfurt # optional (defaults to oregon)
+    plan: standard # optional (defaults to starter)
+    branch: main # optional (defaults to master)
+    # dockerCommand: ./webdis.sh # optional (defaults to Dockerfile command)
     numInstances: 1
     healthCheckPath: /
     envVars:
-      - key: DB_POSTGRESDB_HOST
+      - key: PGHOST
         fromDatabase:
-          name: n8nDB
+          name: n8nDB-jonas
           property: host
-      - key: DB_POSTGRESDB_DATABASE
+      - key: PGDATABASE
         fromDatabase:
-          name: n8nDB
+          name: n8nDB-jonas
           property: database
-      - key: DB_POSTGRESDB_PORT
+      - key: PGPORT
         fromDatabase:
-          name: n8nDB
+          name: n8nDB-jonas
           property: port
-      - key: DB_POSTGRESDB_USER
+      - key: PGUSER
         fromDatabase:
-          name: n8nDB
+          name: n8nDB-jonas
           property: user
-      - key: DB_POSTGRESDB_PASSWORD
+      - key: PGPASSWORD
         fromDatabase:
-          name: n8nDB
+          name: n8nDB-jonas
           property: password
-      - key: DB_TYPE
-        value: postgresdb
-      - key: N8N_ENCRYPTION_KEY
-        value: "gIH4B**7Xf2CDm4SIsmvc2"
-      - key: GENERIC_TIMEZONE
-        value: "Europe/Berlin"
-      - key: WEBHOOK_URL
-        value: "https://app.readyformars.org/"
-      - key: N8N_LOG_LEVEL
-        value: "verbose"
     disk:
-      name: n8nDisk
+      name: n8nDisk-jonas
       mountPath: /home/node/.n8n
       sizeGB: 10
 
 databases:
-  - name: n8nDB
+  - name: n8nDB-jonas
     plan: starter
